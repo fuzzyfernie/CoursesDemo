@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/css/DemoCSS.css" rel="stylesheet" />
+
+</head>
+<body>
+    <header>Welcome to Courses Selection</header>
+
+    <div id="content">
+        <article>   
+            @RenderBody()
+        </article>
+    </div>
+
+    <nav>
+        <ul>
+            <li>Home</li>
+            <li>Register</li>
+            <li>Login</li>
+            <li>Schedule</li>
+        </ul>
+    </nav>
+
+    <footer>All rights reserved</footer>
+
+</body>
+</html>

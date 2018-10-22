@@ -1,0 +1,30 @@
+﻿@model WebApplicationDemo.Models.Student;
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EditStudent</title>
+</head>
+<body>
+    <h1>Edit Your Information</h1>
+    <form asp-action="UpdateStudent" method="post">
+        <p>Please enter you first name.</p>
+        <input asp-for="FirstName" value="@Model.FirstName"/>
+        <br />
+        <p>Last name:</p>
+        <input asp-for="LastName" value="@Model.LastName"/>
+        <br />
+        <p>Email:</p>
+        <input asp-for="StudentEmail" value="@Model.StudentEmail"/>
+        <br />
+        <button type="submit">submit</button>
+    </form>
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+﻿
+@model WebApplicationDemo.Models.Student;
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    
+</head>
+<body>
+    <center>
+        <h1>Student Courses Registration Page</h1>
+
+
+        <form asp-action="Registration" method="post">
+            <p>Please enter you first name.</p>
+            <input asp-for="FirstName" />
+
+            <p>Last name:</p>
+            <input asp-for="LastName" />
+
+            <p>Email:</p>
+            <input asp-for="StudentEmail" /><br /><br />
+
+            <button type="submit">submit</button>
+            <br />
+        </form>
+    </center>
+    @*<a href="@Url.Action("Registration","Home")">Registration</a>*@
+
+</body>
+</html>

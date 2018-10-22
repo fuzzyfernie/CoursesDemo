@@ -1,0 +1,34 @@
+﻿@model WebApplicationDemo.Models.Student;
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Registration</title>
+</head>
+<body>
+    <center>
+    <h1>Registration Page</h1>
+    <br />
+    @Model.FirstName
+
+    <br />
+    @Model.LastName
+    <br />
+    @Model.StudentEmail
+    <br />
+    <br />
+    <a href="@Url.Action("EditCourse","Checkbox")">Pick Your Courses</a>
+
+    <br />
+    <a href="@Url.Action("EditStudent","Home")">Edit Info</a>
+    <br />
+    <a href="@Url.Action("DeleteStudent","Home")">Delete Info</a>
+</center>
+</body>
+</html>

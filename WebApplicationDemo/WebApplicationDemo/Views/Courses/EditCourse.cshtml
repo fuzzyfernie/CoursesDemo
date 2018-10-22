@@ -1,0 +1,38 @@
+﻿@model WebApplicationDemo.Models.Courselist
+
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EditCourse</title>
+</head>
+<body>
+
+    <center>
+
+        @using (Html.BeginForm())
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                @Html.CheckBoxFor(m => Model.courses[i].ischecked)
+                @Model.courses[i].ClassName
+                @Html.HiddenFor(m => Model.courses[i].ClassID)
+                @Html.HiddenFor(m => Model.courses[i].ClassName)
+                <br />
+            }
+
+            <input type="submit" value="Get Selected Checkboxlist Items" />
+            <hr />
+            <h1>@ViewBag.chkmsg</h1>
+        }
+    </center>
+
+
+</body>
+</html>
