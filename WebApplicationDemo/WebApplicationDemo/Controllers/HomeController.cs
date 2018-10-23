@@ -25,16 +25,19 @@ namespace WebApplicationDemo.Controllers
             return View();
         }
 
-        public IActionResult Registration(Student student)
+        public IActionResult Registration(viewModelStudentCourse student)
         {
             //send it to the DB
             //validate the info
 
-            //string connStr = configuration.GetConnectionString("DefaultConnection");
+            //student = new viewModelStudentCourse();
             DALStudent dp = new DALStudent(configuration);
             int uID = dp.addStudent(student);
-
             student.UID = uID;
+            student.Courses = new Courselist();
+            student.Courses.Courses = dp.getCourses(student.UID);
+
+            //string connStr = configuration.GetConnectionString("DefaultConnection");
 
             //save the User ID to the session
             HttpContext.Session.SetString("uID",uID.ToString()); //write to the session

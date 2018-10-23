@@ -80,7 +80,7 @@ namespace WebApplicationDemo.DAL
             //Step 2 - create a command
             //string query = "SELECT [ClassID],[ClassName],[ClassTime]FROM [dbo].[Classes_Available] join [dbo].[Student] on [Classes_Available].[ClassID] = [Student].[ClassID] " +
             //    "where StudentID = @uID";
-            string query = "select c.[ClassID], c.[ClassName], c.[ClassTime] from Classes_Available c" +
+            string query = "select c.[ClassID], c.[ClassName], c.[ClassTime] from Classes_Available c " +
             "where c.ClassTime not in (" +
                 "SELECT a.[ClassTime] FROM[dbo].[Classes_Available] a join[dbo].[Student_Schedule] b on a.[ClassID] = b.[ClassID] where b.StudentID = @studentID)";
 
@@ -146,11 +146,11 @@ namespace WebApplicationDemo.DAL
             conn.Open();
 
             //Step 2 - create a command
-            string query = "UPDATE [dbo].[Student_Schedule] SET [ClassName] =pClassName,[ClassTime] = @pClassTime WHERE StudentID = @pStudentID";
+            string query = "UPDATE [dbo].[Student_Schedule] SET [ClassID] =pClassID, WHERE StudentID = @pStudentID";
             SqlCommand cmd = new SqlCommand(query, conn);
-            //cmd.Parameters.AddWithValue("@pStudentID", student.StudentID);
-            cmd.Parameters.AddWithValue("@pClassName", courses.ClassName);
-            cmd.Parameters.AddWithValue("@pClassTime", courses.ClassTime);
+            cmd.Parameters.AddWithValue("@pStudentID", courses.StudentID);
+            cmd.Parameters.AddWithValue("@pClassID", courses.ClassID);
+            
             
 
             //Step 3 - query the DB

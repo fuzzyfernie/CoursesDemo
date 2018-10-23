@@ -1,4 +1,4 @@
-﻿@model WebApplicationDemo.Models.Courses
+﻿@model WebApplicationDemo.Models.viewModelStudentCourse
 
 
 @{
@@ -36,17 +36,36 @@
             <h1>@ViewBag.chkmsg</h1>
         }*@
 
-
+        <p>Courses Available to Pick</p>
+        <table>
+            <tr>
+                @*<th>Class ID</th>*@
+                <th>Class Name</th>
+                <th>Class Time</th>
+            </tr>
+            @foreach (var student in Model.Courses.Courses)
+            {
+                <tr>
+                    @*<td>@student.ClassID</td>*@
+                    <td>@student.ClassName</td>
+                    <td>@student.ClassTime.ToShortTimeString()</td>
+                </tr>
+            }
+        </table>
         <h1>Edit Course Information</h1>
-        <form asp-action="UpdateStudent" method="post">
-            <p>Please enter you first name.</p>
-            <input asp-for="ClassName" value="@Model.ClassName" />
+        <form asp-action="UpdateCourse" method="post">
+            <p>Please enter your choices.</p>
+            <label asp-for="ClassName">First Choice</label>
+            <select asp-for="ClassName" asp-items="@(new SelectList(@Model.Courses.Courses,"ClassID","ClassName"))"></select>
             <br />
-            <p>Last name:</p>
-            <input asp-for="ClassName" value="@Model.ClassName" />
             <br />
-            <p>Email:</p>
-            <input asp-for="ClassName" value="@Model.ClassName" />
+            <label asp-for="ClassName">Second Choice</label>
+            <select asp-for="ClassName" asp-items="@(new SelectList(@Model.Courses.Courses,"ClassID","ClassName"))"></select>
+            <br />
+            <br />
+            <label asp-for="ClassName">Third Choice</label>
+            <select asp-for="ClassName" asp-items="@(new SelectList(@Model.Courses.Courses,"ClassID","ClassName"))"></select>
+            <br />
             <br />
             <button type="submit">submit</button>
         </form>

@@ -12,7 +12,7 @@ namespace WebApplicationDemo.Models
         public string ClassName { get; set; }
         public DateTime ClassTime { get; set; }
         public int UID { get; set; }
-       //public bool ischecked { get; set; }
+        public object StudentID { get;  set; }
     }
 
     public class Courselist

@@ -1,4 +1,4 @@
-﻿@model WebApplicationDemo.Models.Student;
+﻿@model WebApplicationDemo.Models.viewModelStudentCourse;
 
 @{
     Layout = null;
@@ -10,7 +10,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Registration</title>
-    <link href="~/css/DemoCSS.css" rel="stylesheet" />
+   
 </head>
 <body>
     <center>
@@ -32,16 +32,16 @@
                 <th>Class Name</th>
                 <th>Class Time</th>
             </tr>
-            @*@foreach (var student in Model)*@
+            @foreach (var student in Model.Courses.Courses)
             {
-                <tr>
-                    @*<td>@pClassID</td>
-                    <td>@pClassName</td>
-                    <td>@pClassTime</td>*@
-                </tr>
+            <tr>
+                <td>@student.ClassID</td>
+                <td>@student.ClassName</td>
+                <td>@student.ClassTime.ToShortTimeString()</td>
+            </tr>
             }
         </table>
-         <br />
+        <br />
         <br />
 
         <a href="@Url.Action("EditCourse","Courses")">Pick Your Courses </a>

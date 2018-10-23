@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using WebApplicationDemo.Models;
 
@@ -117,32 +118,27 @@ namespace WebApplicationDemo.DAL
 
        ////////////////////////Courses Information /////////////////////////////////////////////
 
-        public Courses getCourses(int uID)
+        public List<Courses> getCourses(int uID)
         {
-            Courses courses = new Courses();
+            List<Courses> courses = new List<Courses>();
+            
             //Step 1 - Connecto to the DB
             string connStr = configuration.GetConnectionString("DefaultConnection");
             SqlConnection conn = new SqlConnection(connStr);
             conn.Open();
 
             //Step 2 - create a command
-            string query = "select c.[ClassID], c.[ClassName], c.[ClassTime] from Classes_Available c where c.ClassTime not in (SELECT a.[ClassTime] FROM[dbo].[Classes_Available] a join[dbo].[Student_Schedule] b on a.[ClassID] = b.[ClassID] where b.StudentID= @uID";
+            string query = "select c.[ClassID], c.[ClassName], c.[ClassTime] from Classes_Available c where c.ClassTime not in (SELECT a.[ClassTime] FROM[dbo].[Classes_Available] a join[dbo].[Student_Schedule] b on a.[ClassID] = b.[ClassID] where b.StudentID = @uid)";
             SqlCommand cmd = new SqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@uID", uID);
 
 
             //Step 3 - query the DB
             SqlDataReader reader = cmd.ExecuteReader();
-            reader.Read();
-            courses.ClassName = reader["ClassName"].ToString();
-            courses.ClassTime = Convert.ToDateTime(reader["ClassTime"]);
-            courses.UID = uID;
-
-            
-
-
-
-
+            while (reader.Read())
+            {
+                courses.Add(new Courses() { ClassID = Convert.ToInt32(reader["ClassID"]), ClassName = reader["ClassName"].ToString(), ClassTime = Convert.ToDateTime(reader["ClassTime"]), UID = uID });
+            }           
             //Step 4 - close the connection
             conn.Close();
 
