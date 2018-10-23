@@ -10,15 +10,16 @@ namespace WebApplicationDemo.Models
     {
         public int ClassID { get; set; }
         public string ClassName { get; set; }
-        public int ClassTime { get; set; }
+        public DateTime ClassTime { get; set; }
         public int UID { get; set; }
-        public bool ischecked { get; set; }
+       //public bool ischecked { get; set; }
     }
 
     public class Courselist
     {
 
-        public List<Courses> courses { get; set; }
+        public List<Courses> Courses { get; set; }
+
     }
 
 

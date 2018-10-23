@@ -10,25 +10,46 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Registration</title>
+    <link href="~/css/DemoCSS.css" rel="stylesheet" />
 </head>
 <body>
     <center>
-    <h1>Registration Page</h1>
-    <br />
-    @Model.FirstName
+        <h1>Registration Page</h1>
+        <br />
+        <P>
+            Student Name:
+            @Model.FirstName
 
-    <br />
-    @Model.LastName
-    <br />
-    @Model.StudentEmail
-    <br />
-    <br />
-    <a href="@Url.Action("EditCourse","Checkbox")">Pick Your Courses</a>
+            @Model.LastName
+            <br />
+            Email Address:
+            @Model.StudentEmail
+        </P>
+        <p>Courses Available to Pick</p>
+        <table>
+            <tr>
+                <th>Class ID</th>
+                <th>Class Name</th>
+                <th>Class Time</th>
+            </tr>
+            @*@foreach (var student in Model)*@
+            {
+                <tr>
+                    @*<td>@pClassID</td>
+                    <td>@pClassName</td>
+                    <td>@pClassTime</td>*@
+                </tr>
+            }
+        </table>
+         <br />
+        <br />
 
-    <br />
-    <a href="@Url.Action("EditStudent","Home")">Edit Info</a>
-    <br />
-    <a href="@Url.Action("DeleteStudent","Home")">Delete Info</a>
-</center>
+        <a href="@Url.Action("EditCourse","Courses")">Pick Your Courses </a>
+        &nbsp;
+        <a href="@Url.Action("EditStudent","Home")">Edit Info </a>
+        &nbsp;
+        <a href="@Url.Action("DeleteStudent","Home")">Delete Info </a>
+
+    </center>
 </body>
 </html>

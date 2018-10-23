@@ -1,4 +1,4 @@
-﻿@model WebApplicationDemo.Models.Courselist
+﻿@model WebApplicationDemo.Models.Courses
 
 
 @{
@@ -16,21 +16,41 @@
 
     <center>
 
-        @using (Html.BeginForm())
+        @*@using (Html.BeginForm())
         {
-            for (int i = 0; i < 6; i++)
+            //for (int i = 0; i < 6; i++)
+            foreach (var course in Model.Courses)
             {
-                @Html.CheckBoxFor(m => Model.courses[i].ischecked)
-                @Model.courses[i].ClassName
-                @Html.HiddenFor(m => Model.courses[i].ClassID)
-                @Html.HiddenFor(m => Model.courses[i].ClassName)
+                //@Html.CheckBoxFor(m => Model.courses[i].ischecked)
+                <input type="checkbox" id="@course.ClassID" value="@course.ischecked" />
+                <span>@course.ClassName</span>
+                <span>@course.ClassTime</span>
+                //@Model.courses[i].ClassName
+                @Html.HiddenFor(m => course.ClassID)
+                @Html.HiddenFor(m => course.ClassName)
                 <br />
             }
 
             <input type="submit" value="Get Selected Checkboxlist Items" />
             <hr />
             <h1>@ViewBag.chkmsg</h1>
-        }
+        }*@
+
+
+        <h1>Edit Course Information</h1>
+        <form asp-action="UpdateStudent" method="post">
+            <p>Please enter you first name.</p>
+            <input asp-for="ClassName" value="@Model.ClassName" />
+            <br />
+            <p>Last name:</p>
+            <input asp-for="ClassName" value="@Model.ClassName" />
+            <br />
+            <p>Email:</p>
+            <input asp-for="ClassName" value="@Model.ClassName" />
+            <br />
+            <button type="submit">submit</button>
+        </form>
+
     </center>
 
 

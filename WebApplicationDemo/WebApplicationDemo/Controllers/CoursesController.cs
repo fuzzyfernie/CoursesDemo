@@ -50,10 +50,13 @@ namespace WebApplicationDemo.Controllers
 
             //get the Course object from the DB using the DALCourse class
             DALCourses dp = new DALCourses(configuration);
-            Courses courses = dp.getCourses(uID);
+            Courselist courseList = new Courselist
+            {
+                Courses = dp.GetCourseAvailableForStudent(uID)
+            };
 
             //send the view 
-            return View(courses);
+            return View(courseList);
         }
 
 

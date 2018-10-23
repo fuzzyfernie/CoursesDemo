@@ -25,7 +25,6 @@ C:\Users\Fernie\Documents\Visual Studio 2017\Projects\WebApplicationDemo\WebAppl
 C:\Users\Fernie\Documents\Visual Studio 2017\Projects\WebApplicationDemo\WebApplicationDemo\obj\Debug\netcoreapp2.1\Razor\Views\Home\EditStudent.g.cshtml.cs
 C:\Users\Fernie\Documents\Visual Studio 2017\Projects\WebApplicationDemo\WebApplicationDemo\obj\Debug\netcoreapp2.1\Razor\Views\Home\DeleteStudent.g.cshtml.cs
 C:\Users\Fernie\Documents\Visual Studio 2017\Projects\WebApplicationDemo\WebApplicationDemo\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_DemoLayout.g.cshtml.cs
-C:\Users\Fernie\Documents\Visual Studio 2017\Projects\WebApplicationDemo\WebApplicationDemo\obj\Debug\netcoreapp2.1\Razor\Views\Demo\Index.g.cshtml.cs
 C:\Users\Fernie\Documents\Visual Studio 2017\Projects\WebApplicationDemo\WebApplicationDemo\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_ValidationScriptsPartial.g.cshtml.cs
 C:\Users\Fernie\Documents\Visual Studio 2017\Projects\WebApplicationDemo\WebApplicationDemo\obj\Debug\netcoreapp2.1\WebApplicationDemo.csprojAssemblyReference.cache
 C:\Users\Fernie\Documents\Visual Studio 2017\Projects\WebApplicationDemo\WebApplicationDemo\obj\Debug\netcoreapp2.1\Razor\Views\Courses\EditCourse.g.cshtml.cs

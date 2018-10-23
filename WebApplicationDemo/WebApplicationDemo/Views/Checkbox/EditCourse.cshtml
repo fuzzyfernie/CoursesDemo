@@ -1,4 +1,4 @@
-﻿@model WebApplicationDemo.Models.Courselist
+﻿@*@model WebApplicationDemo.Models.Courselist
 @{
     Layout = null;
 }
@@ -17,10 +17,10 @@
         {
             for (int i = 0; i < 6; i++)
             {
-                @Html.CheckBoxFor(m =>Model.courses[i].ischecked)
-                @Model.courses[i].ClassName
-                @Html.HiddenFor(m => Model.courses[i].ClassID)
-                @Html.HiddenFor(m=> Model.courses[i].ClassName)
+                @Html.CheckBoxFor(m =>Model.Courses[i].ischecked)
+               // @Model.courses[i].ClassName
+                @Html.HiddenFor(m => Model.Courses[i].ClassID)
+                @Html.HiddenFor(m=> Model.Courses[i].ClassName)
                 <br />
             }
 
@@ -32,4 +32,4 @@
 
 
 </body>
-</html>
+</html>*@

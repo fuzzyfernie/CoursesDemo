@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using WebApplicationDemo.Models;
 
@@ -41,7 +42,7 @@ namespace WebApplicationDemo.DAL
             return uID;
         }
 
-        internal Courses getCourses(int uID)
+        public Courses getCourses(int uID)
         {
             Courses courses = new Courses();
             //Step 1 - Connecto to the DB
@@ -61,6 +62,52 @@ namespace WebApplicationDemo.DAL
             courses.ClassName = reader["ClassName"].ToString();
             //courses.ClassTime = reader["ClassTime"].t.ToString();
             courses.UID = uID;
+
+            //Step 4 - close the connection
+            conn.Close();
+
+            return courses;
+        }
+
+        public List<Courses> GetCourseAvailableForStudent(int studentID)
+        {
+            List<Courses> courses = new List<Courses>();
+            //Step 1 - Connecto to the DB
+            string connStr = configuration.GetConnectionString("DefaultConnection");
+            SqlConnection conn = new SqlConnection(connStr);
+            conn.Open();
+
+            //Step 2 - create a command
+            //string query = "SELECT [ClassID],[ClassName],[ClassTime]FROM [dbo].[Classes_Available] join [dbo].[Student] on [Classes_Available].[ClassID] = [Student].[ClassID] " +
+            //    "where StudentID = @uID";
+            string query = "select c.[ClassID], c.[ClassName], c.[ClassTime] from Classes_Available c" +
+            "where c.ClassTime not in (" +
+                "SELECT a.[ClassTime] FROM[dbo].[Classes_Available] a join[dbo].[Student_Schedule] b on a.[ClassID] = b.[ClassID] where b.StudentID = @studentID)";
+
+            SqlCommand cmd = new SqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@studentID", studentID);
+
+
+            //Step 3 - query the DB
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Courses newCourse = new Courses()
+                    {
+                        ClassID = Convert.ToInt32(reader["ClassID"]),
+                        ClassName = reader["ClassName"].ToString(),
+                        ClassTime = Convert.ToDateTime(reader["ClassTime"])
+                    };
+
+                    courses.Add(newCourse);
+                }
+            }
+                //reader.Read();
+
+            //courses.ClassName = reader["ClassName"].ToString();
+            //courses.ClassTime = reader["ClassTime"].t.ToString();
+            //courses.UID = uID;
 
             //Step 4 - close the connection
             conn.Close();

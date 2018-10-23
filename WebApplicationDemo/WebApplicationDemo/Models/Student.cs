@@ -12,6 +12,13 @@ namespace WebApplicationDemo.Models
         public string StudentEmail { get; set; }
         public int UID { get; set; }
 
-       
+        public int ClassID { get; set; }
+        public string ClassName { get; set; }
+        //public int ClassTime { get; set; }
+        public DateTime ClassTime { get; set; }
+        //public int UID { get; set; }
+        //public bool ischecked { get; set; }
+
+
     }
 }
