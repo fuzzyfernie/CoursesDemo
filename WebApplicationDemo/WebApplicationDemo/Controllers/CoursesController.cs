@@ -43,6 +43,7 @@ namespace WebApplicationDemo.Controllers
             return View(courses);
         }
 
+        [HttpGet]
         public IActionResult EditCourse(int? id)
         {
             //get the UID from the Session
@@ -54,7 +55,39 @@ namespace WebApplicationDemo.Controllers
             Student stu = ds.getStudent(uID);
             viewModelStudentCourse courseList = new viewModelStudentCourse();
             courseList.UID = stu.UID;
-            
+            courseList.AddedCourse = new Courses();
+            courseList.AddedCourse.UID = stu.UID;  /// This is new
+
+            courseList.SelectedCourses = new Courselist();
+            courseList.SelectedCourses.Courses = dp.getCourses(stu.UID.ToString());
+
+            courseList.FirstName = stu.FirstName;
+            courseList.LastName = stu.LastName;
+            courseList.StudentEmail = stu.StudentEmail;
+            courseList.Courses = new Courselist();
+            courseList.Courses.Courses = dp.GetCourseAvailableForStudent(uID);
+
+           
+
+            //send the view 
+            return View(courseList);
+        }
+
+        [HttpPost]
+        public IActionResult EditCourse(viewModelStudentCourse viewModel)
+        {
+            //get the UID from the Session
+            int uID = Convert.ToInt32(HttpContext.Session.GetString("uID")); //reads from the session
+
+            //get the Course object from the DB using the DALCourse class
+            DALCourses dp = new DALCourses(configuration);
+            DALStudent ds = new DALStudent(configuration);
+
+            Student stu = ds.getStudent(uID);
+            dp.UpdateCourses(viewModel.AddedCourse.ClassID.ToString(), viewModel.AddedCourse.UID);
+            viewModelStudentCourse courseList = new viewModelStudentCourse();
+            courseList.UID = stu.UID;
+
             courseList.FirstName = stu.FirstName;
             courseList.LastName = stu.LastName;
             courseList.StudentEmail = stu.StudentEmail;
@@ -62,16 +95,15 @@ namespace WebApplicationDemo.Controllers
             courseList.Courses.Courses = dp.GetCourseAvailableForStudent(uID);
 
             //send the view 
-            return View(courseList);
+            // return View(courseList);
+            return RedirectToAction("EditCourse", new { uID = uID });
         }
-
 
         public IActionResult UpdateCourse(string class1,string class2, string class3)
         {
             //get the uid from the session
             int uID = Convert.ToInt32(HttpContext.Session.GetString("uID")); //reads from the session
-     
-
+    
 
             DALCourses dp = new DALCourses(configuration);
             dp.UpdateCourses(class1,uID);
@@ -80,9 +112,9 @@ namespace WebApplicationDemo.Controllers
             viewModelStudentCourse vwcourse = new viewModelStudentCourse();
             vwcourse.Courses = new Courselist();
             vwcourse.Courses.Courses = new List<Courses>();
-            vwcourse.Courses.Courses.Add(dp.getCourses(class1));
-            vwcourse.Courses.Courses.Add(dp.getCourses(class2));
-            vwcourse.Courses.Courses.Add(dp.getCourses(class3));
+            //vwcourse.Courses.Courses.Add(dp.getCourses(class1));
+            //vwcourse.Courses.Courses.Add(dp.getCourses(class2));
+            //vwcourse.Courses.Courses.Add(dp.getCourses(class3));
 
             DALStudent ds = new DALStudent(configuration);
             Student stu = ds.getStudent(uID);

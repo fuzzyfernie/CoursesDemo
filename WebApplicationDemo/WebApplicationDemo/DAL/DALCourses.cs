@@ -42,35 +42,12 @@ namespace WebApplicationDemo.DAL
             return uID;
         }
 
-        //public Courses getCourses(int uID)
-        //{
-        //    Courses courses = new Courses();
-        //    //Step 1 - Connecto to the DB
-        //    string connStr = configuration.GetConnectionString("DefaultConnection");
-        //    SqlConnection conn = new SqlConnection(connStr);
-        //    conn.Open();
-
-        //    //Step 2 - create a command
-        //    string query = "SELECT [ClassID],[ClassName],[ClassTime]FROM [dbo].[Classes_Available], [dbo].[Student] where StudentID = @uID";
-        //    SqlCommand cmd = new SqlCommand(query, conn);
-        //    cmd.Parameters.AddWithValue("@uID", uID);
 
 
-        //    //Step 3 - query the DB
-        //    SqlDataReader reader = cmd.ExecuteReader();
-        //    reader.Read();
-        //    courses.ClassName = reader["ClassName"].ToString();
-        //    //courses.ClassTime = reader["ClassTime"].t.ToString();
-        //    courses.UID = uID;
-
-        //    //Step 4 - close the connection
-        //    conn.Close();
-
-        //    return courses;
-        //}
-
-        public Courses getCourses(string CourseID)
+        // public Courses getCourses(string CourseID)
+        public List<Courses> getCourses(string CourseID)
         {
+            List<Courses> coursesList = new List<Courses>();
             Courses courses = new Courses();
             //Step 1 - Connecto to the DB
             string connStr = configuration.GetConnectionString("DefaultConnection");
@@ -85,20 +62,26 @@ namespace WebApplicationDemo.DAL
 
             //Step 3 - query the DB
             SqlDataReader reader = cmd.ExecuteReader();
-            reader.Read();
-            courses.ClassName = reader["ClassName"].ToString();
-            courses.ClassTime = Convert.ToDateTime(reader["ClassTime"]);
-            //courses.UID = uID;
-            courses.ClassID = Convert.ToInt32(CourseID);
+            while (reader.Read())
+            {
+                Courses newCourse = new Courses()
+                {
+                    ClassName = reader["ClassName"].ToString(),
+                    ClassTime = Convert.ToDateTime(reader["ClassTime"]),
+                    //courses.UID = uID;
+                    ClassID = Convert.ToInt32(CourseID)
 
+                };
+                coursesList.Add(newCourse);
+        }
+        
             //Step 4 - close the connection
             conn.Close();
 
-            return courses;
+            return coursesList;
         }
 
-     
-    
+       
 
         public List<Courses> GetCourseAvailableForStudent(int studentID)
         {
@@ -140,30 +123,8 @@ namespace WebApplicationDemo.DAL
             return courses;
         }
 
-        //internal void DeleteCourses(int uID)
-        //{
 
-        //    //Step 1 - Connecto to the DB
-        //    string connStr = configuration.GetConnectionString("DefaultConnection");
-        //    SqlConnection conn = new SqlConnection(connStr);
-        //    conn.Open();
-
-        //    //Step 2 - create a command
-        //    string query = "DELETE FROM [dbo].[Student_Schedule] WHERE ClassID = @pClassID";
-        //    SqlCommand cmd = new SqlCommand(query, conn);
-        //    cmd.Parameters.AddWithValue("@pClassID", uID);
-
-
-        //    //Step 3 - query the DB
-        //    cmd.ExecuteNonQuery();
-
-        //    //Step 4 - close the connection
-        //    conn.Close();
-
-
-        //}
-
-        internal void UpdateCourses(string class1, int uID)
+        internal void UpdateCourses(string ClassID, int uID)
         {
 
             //Step 1 - Connecto to the DB
@@ -175,7 +136,7 @@ namespace WebApplicationDemo.DAL
             string query = "INSERT INTO [dbo].[Student_Schedule]([ClassID],[StudentID])VALUES(@pClassID,@pStudentID) select SCOPE_IDENTITY() as StudentID;";
             SqlCommand cmd = new SqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@pStudentID", uID);
-            cmd.Parameters.AddWithValue("@pClassID", class1);
+            cmd.Parameters.AddWithValue("@pClassID", ClassID);
             
             
 

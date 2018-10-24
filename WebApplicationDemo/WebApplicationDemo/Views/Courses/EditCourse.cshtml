@@ -45,30 +45,77 @@
         Email Address:
         @Model.StudentEmail
 
-       
+
 
         <h1>Pick Your Courses</h1>
-        <form asp-action="UpdateCourse" method="post">
+        @*<form asp-action="UpdateCourse" method="post">*@
+        <form method="post">
             <p>Please enter your choices.</p>
-            <label asp-for="ClassName">First Choice</label>
+            <label asp-for="AddedCourse.ClassID">Select Your Courses</label>
 
-            <select asp-for="ClassName" name="class1" asp-items="@(new SelectList(@Model.Courses.Courses,"ClassID","ClassName"))"></select>
-
+            <select asp-for="AddedCourse.ClassID" asp-items="@(new SelectList(@Model.Courses.Courses,"ClassID","ClassName"))"></select>
+            <input asp-for="AddedCourse.UID" type="hidden" />
             <br />
             <br />
-            <label asp-for="ClassName">Second Choice</label>
-            <select asp-for="ClassName" name="class2" asp-items="@(new SelectList(@Model.Courses.Courses,"ClassID","ClassName"))"></select>
-            <br />
-            <br />
-            <label asp-for="ClassName">Third Choice</label>
-            <select asp-for="ClassName" name="class3" asp-items="@(new SelectList(@Model.Courses.Courses,"ClassID","ClassName"))"></select>
-            <br />
-            <br />
-            <button type="submit">submit</button>
+           
+            <button type="submit">Add Class</button>
         </form>
 
     </center>
 
+    <h1>Courses Selected Classes</h1>
+        <table>
+            <tr>
+
+
+                <th>Class Name</th>
+                <th>Class Time</th>
+            </tr>
+            @foreach (var student in Model.SelectedCourses.Courses)
+            {
+                <tr>
+
+                    <td>@Model.ClassName</td>
+                    <td>@Model.ClassTime.ToShortTimeString()</td>
+                </tr>
+            }
+        </table>
+       
+
+
+
+
+
+
 
 </body>
 </html>
+
+<script type="text/javascript">
+    var AvailiableCourse = @Model.Courses;
+
+    $(document).ready(function () {
+        var $locations = $('#Class1');
+
+
+        $('#Class1').change(function () {
+            var classID = $(this).val()
+
+            var html = $.map(lcns, function (lcn) {
+                return '<option value="' + lcn + '">' + lcn + '</option>'
+            }).join('');
+            $locations.html(html)
+        });
+    });
+
+    function loadClass() {
+
+    }
+
+    function loadOtherClasses() {
+
+    }
+
+   
+   
+</script>

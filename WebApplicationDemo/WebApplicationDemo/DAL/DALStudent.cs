@@ -192,13 +192,13 @@ namespace WebApplicationDemo.DAL
             //Step 3 - query the DB
             SqlDataReader reader = cmd.ExecuteReader();
             reader.Read();
-            student.FirstName = reader["FirstName"].ToString();
-            student.LastName = reader["LastName"].ToString();
+            student.FirstName = reader["StudentFName"].ToString();
+            student.LastName = reader["StudentLName"].ToString();
             courses.ClassName = reader["ClassName"].ToString();
             courses.ClassTime = Convert.ToDateTime(reader["ClassTime"]);
-            
-            //courses.UID = uID;
-            //courses.ClassID = Convert.ToInt32(CourseID);
+
+            courses.UID = uID;
+            courses.ClassID = Convert.ToInt32(uID);
 
             //Step 4 - close the connection
             conn.Close();
