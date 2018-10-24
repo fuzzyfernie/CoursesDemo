@@ -29,3 +29,5 @@ C:\Users\Fernie\Documents\Visual Studio 2017\Projects\WebApplicationDemo\WebAppl
 C:\Users\Fernie\Documents\Visual Studio 2017\Projects\WebApplicationDemo\WebApplicationDemo\obj\Debug\netcoreapp2.1\WebApplicationDemo.csprojAssemblyReference.cache
 C:\Users\Fernie\Documents\Visual Studio 2017\Projects\WebApplicationDemo\WebApplicationDemo\obj\Debug\netcoreapp2.1\Razor\Views\Courses\EditCourse.g.cshtml.cs
 C:\Users\Fernie\Documents\Visual Studio 2017\Projects\WebApplicationDemo\WebApplicationDemo\obj\Debug\netcoreapp2.1\Razor\Views\Checkbox\EditCourse.g.cshtml.cs
+C:\Users\Fernie\Documents\Visual Studio 2017\Projects\WebApplicationDemo\WebApplicationDemo\obj\Debug\netcoreapp2.1\Razor\Views\Courses\UpdateCourse.g.cshtml.cs
+C:\Users\Fernie\Documents\Visual Studio 2017\Projects\WebApplicationDemo\WebApplicationDemo\obj\Debug\netcoreapp2.1\Razor\Views\Home\GetReport.g.cshtml.cs

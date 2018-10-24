@@ -6,7 +6,6 @@
 }
 
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -16,55 +15,53 @@
 
     <center>
 
-        @*@using (Html.BeginForm())
-        {
-            //for (int i = 0; i < 6; i++)
-            foreach (var course in Model.Courses)
-            {
-                //@Html.CheckBoxFor(m => Model.courses[i].ischecked)
-                <input type="checkbox" id="@course.ClassID" value="@course.ischecked" />
-                <span>@course.ClassName</span>
-                <span>@course.ClassTime</span>
-                //@Model.courses[i].ClassName
-                @Html.HiddenFor(m => course.ClassID)
-                @Html.HiddenFor(m => course.ClassName)
-                <br />
-            }
-
-            <input type="submit" value="Get Selected Checkboxlist Items" />
-            <hr />
-            <h1>@ViewBag.chkmsg</h1>
-        }*@
-
-        <p>Courses Available to Pick</p>
+        <h1>Courses Available to Pick</h1>
         <table>
             <tr>
-                @*<th>Class ID</th>*@
+
+
                 <th>Class Name</th>
                 <th>Class Time</th>
             </tr>
             @foreach (var student in Model.Courses.Courses)
             {
                 <tr>
-                    @*<td>@student.ClassID</td>*@
+
                     <td>@student.ClassName</td>
                     <td>@student.ClassTime.ToShortTimeString()</td>
                 </tr>
             }
         </table>
-        <h1>Edit Course Information</h1>
+        <br />
+        <br />
+
+        Student ID:
+        @Model.UID
+        <br />
+        Student Name:
+        @Model.FirstName
+        @Model.LastName
+        <br />
+        Email Address:
+        @Model.StudentEmail
+
+       
+
+        <h1>Pick Your Courses</h1>
         <form asp-action="UpdateCourse" method="post">
             <p>Please enter your choices.</p>
             <label asp-for="ClassName">First Choice</label>
-            <select asp-for="ClassName" asp-items="@(new SelectList(@Model.Courses.Courses,"ClassID","ClassName"))"></select>
+
+            <select asp-for="ClassName" name="class1" asp-items="@(new SelectList(@Model.Courses.Courses,"ClassID","ClassName"))"></select>
+
             <br />
             <br />
             <label asp-for="ClassName">Second Choice</label>
-            <select asp-for="ClassName" asp-items="@(new SelectList(@Model.Courses.Courses,"ClassID","ClassName"))"></select>
+            <select asp-for="ClassName" name="class2" asp-items="@(new SelectList(@Model.Courses.Courses,"ClassID","ClassName"))"></select>
             <br />
             <br />
             <label asp-for="ClassName">Third Choice</label>
-            <select asp-for="ClassName" asp-items="@(new SelectList(@Model.Courses.Courses,"ClassID","ClassName"))"></select>
+            <select asp-for="ClassName" name="class3" asp-items="@(new SelectList(@Model.Courses.Courses,"ClassID","ClassName"))"></select>
             <br />
             <br />
             <button type="submit">submit</button>

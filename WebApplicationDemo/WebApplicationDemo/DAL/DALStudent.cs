@@ -60,7 +60,7 @@ namespace WebApplicationDemo.DAL
             reader.Read();
             student.FirstName = reader["StudentFName"].ToString();
             student.LastName = reader["StudentLName"].ToString();
-            student.LastName = reader["StudentEmail"].ToString();
+            student.StudentEmail = reader["StudentEmail"].ToString();
             student.UID = uID;
 
             //Step 4 - close the connection
@@ -102,7 +102,7 @@ namespace WebApplicationDemo.DAL
             //Step 2 - create a command
             string query = "UPDATE [dbo].[Student] SET [StudentFName] =pFName,[StudentLName] = @pLName,[StudentEmail] = @pEmail WHERE StudentID = @pStudentID";
             SqlCommand cmd = new SqlCommand(query, conn);
-            //cmd.Parameters.AddWithValue("@pStudentID", student.StudentID);
+            cmd.Parameters.AddWithValue("@pStudentID", student.UID);
             cmd.Parameters.AddWithValue("@pFName", student.FirstName);
             cmd.Parameters.AddWithValue("@pLName", student.LastName);
             cmd.Parameters.AddWithValue("@pEmail", student.StudentEmail);
@@ -167,6 +167,43 @@ namespace WebApplicationDemo.DAL
             conn.Close();
 
             return uID;
+        }
+
+
+        public Courses getReport(int uID)
+        {
+            Courses courses = new Courses();
+            Student student = new Student();
+            //Step 1 - Connecto to the DB
+            string connStr = configuration.GetConnectionString("DefaultConnection");
+            SqlConnection conn = new SqlConnection(connStr);
+            conn.Open();
+
+            //Step 2 - create a command
+            string query = "Select StudentFName, StudentLName, ClassName, " +
+                "convert(varchar,ClassTime ,108) From Student Join " +
+                "Student_Schedule On Student_Schedule.StudentID = " +
+                "Student.StudentID Join Classes_Available On " +
+                "Classes_Available.ClassID = Student_Schedule.ClassID";
+            SqlCommand cmd = new SqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@uID", uID);
+
+
+            //Step 3 - query the DB
+            SqlDataReader reader = cmd.ExecuteReader();
+            reader.Read();
+            student.FirstName = reader["FirstName"].ToString();
+            student.LastName = reader["LastName"].ToString();
+            courses.ClassName = reader["ClassName"].ToString();
+            courses.ClassTime = Convert.ToDateTime(reader["ClassTime"]);
+            
+            //courses.UID = uID;
+            //courses.ClassID = Convert.ToInt32(CourseID);
+
+            //Step 4 - close the connection
+            conn.Close();
+
+            return courses;
         }
 
 

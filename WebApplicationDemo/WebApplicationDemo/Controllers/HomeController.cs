@@ -30,14 +30,14 @@ namespace WebApplicationDemo.Controllers
             //send it to the DB
             //validate the info
 
-            //student = new viewModelStudentCourse();
+           
             DALStudent dp = new DALStudent(configuration);
             int uID = dp.addStudent(student);
             student.UID = uID;
             student.Courses = new Courselist();
             student.Courses.Courses = dp.getCourses(student.UID);
 
-            //string connStr = configuration.GetConnectionString("DefaultConnection");
+          
 
             //save the User ID to the session
             HttpContext.Session.SetString("uID",uID.ToString()); //write to the session
@@ -80,11 +80,33 @@ namespace WebApplicationDemo.Controllers
             Student student = dp.getStudent(uID);
 
             dp.DeleteStudent(uID);
-           
-
-           
-           
-            return View(student);
+                  
+           return View(student);
         }
+
+
+        public IActionResult GetReport(viewModelStudentCourse student)
+        {
+            //get the UID from the Session
+            int uID = Convert.ToInt32(HttpContext.Session.GetString("uID")); //reads from the session
+
+            //get the Student object from the DB using the DALStudent class
+            DALCourses dp = new DALCourses(configuration);
+            DALStudent ds = new DALStudent(configuration);
+            //student.Courses.Courses = dp.getReport(student.UID);
+            viewModelStudentCourse courseList = new viewModelStudentCourse();
+            //courseList.UID = stu.UID;
+
+            //student.FirstName = FirstName;
+            //student.LastName = LastName;
+            //student.StudentEmail = StudentEmail;
+            
+            
+
+
+            //send the view 
+            return View("GetReport");
+        }
+
     }
 }

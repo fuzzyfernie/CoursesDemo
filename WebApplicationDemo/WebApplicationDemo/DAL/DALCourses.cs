@@ -42,7 +42,34 @@ namespace WebApplicationDemo.DAL
             return uID;
         }
 
-        public Courses getCourses(int uID)
+        //public Courses getCourses(int uID)
+        //{
+        //    Courses courses = new Courses();
+        //    //Step 1 - Connecto to the DB
+        //    string connStr = configuration.GetConnectionString("DefaultConnection");
+        //    SqlConnection conn = new SqlConnection(connStr);
+        //    conn.Open();
+
+        //    //Step 2 - create a command
+        //    string query = "SELECT [ClassID],[ClassName],[ClassTime]FROM [dbo].[Classes_Available], [dbo].[Student] where StudentID = @uID";
+        //    SqlCommand cmd = new SqlCommand(query, conn);
+        //    cmd.Parameters.AddWithValue("@uID", uID);
+
+
+        //    //Step 3 - query the DB
+        //    SqlDataReader reader = cmd.ExecuteReader();
+        //    reader.Read();
+        //    courses.ClassName = reader["ClassName"].ToString();
+        //    //courses.ClassTime = reader["ClassTime"].t.ToString();
+        //    courses.UID = uID;
+
+        //    //Step 4 - close the connection
+        //    conn.Close();
+
+        //    return courses;
+        //}
+
+        public Courses getCourses(string CourseID)
         {
             Courses courses = new Courses();
             //Step 1 - Connecto to the DB
@@ -51,23 +78,27 @@ namespace WebApplicationDemo.DAL
             conn.Open();
 
             //Step 2 - create a command
-            string query = "SELECT [ClassID],[ClassName],[ClassTime]FROM [dbo].[Classes_Available], [dbo].[Student] where StudentID = @uID";
+            string query = "SELECT [ClassID],[ClassName],[ClassTime]FROM [dbo].[Classes_Available], [dbo].[Student] where ClassID = @ClassID";
             SqlCommand cmd = new SqlCommand(query, conn);
-            cmd.Parameters.AddWithValue("@uID", uID);
+            cmd.Parameters.AddWithValue("@ClassID", CourseID);
 
 
             //Step 3 - query the DB
             SqlDataReader reader = cmd.ExecuteReader();
             reader.Read();
             courses.ClassName = reader["ClassName"].ToString();
-            //courses.ClassTime = reader["ClassTime"].t.ToString();
-            courses.UID = uID;
+            courses.ClassTime = Convert.ToDateTime(reader["ClassTime"]);
+            //courses.UID = uID;
+            courses.ClassID = Convert.ToInt32(CourseID);
 
             //Step 4 - close the connection
             conn.Close();
 
             return courses;
         }
+
+     
+    
 
         public List<Courses> GetCourseAvailableForStudent(int studentID)
         {
@@ -78,8 +109,7 @@ namespace WebApplicationDemo.DAL
             conn.Open();
 
             //Step 2 - create a command
-            //string query = "SELECT [ClassID],[ClassName],[ClassTime]FROM [dbo].[Classes_Available] join [dbo].[Student] on [Classes_Available].[ClassID] = [Student].[ClassID] " +
-            //    "where StudentID = @uID";
+           
             string query = "select c.[ClassID], c.[ClassName], c.[ClassTime] from Classes_Available c " +
             "where c.ClassTime not in (" +
                 "SELECT a.[ClassTime] FROM[dbo].[Classes_Available] a join[dbo].[Student_Schedule] b on a.[ClassID] = b.[ClassID] where b.StudentID = @studentID)";
@@ -103,19 +133,37 @@ namespace WebApplicationDemo.DAL
                     courses.Add(newCourse);
                 }
             }
-                //reader.Read();
-
-            //courses.ClassName = reader["ClassName"].ToString();
-            //courses.ClassTime = reader["ClassTime"].t.ToString();
-            //courses.UID = uID;
-
+               
             //Step 4 - close the connection
             conn.Close();
 
             return courses;
         }
 
-        internal void DeleteCourses(int uID)
+        //internal void DeleteCourses(int uID)
+        //{
+
+        //    //Step 1 - Connecto to the DB
+        //    string connStr = configuration.GetConnectionString("DefaultConnection");
+        //    SqlConnection conn = new SqlConnection(connStr);
+        //    conn.Open();
+
+        //    //Step 2 - create a command
+        //    string query = "DELETE FROM [dbo].[Student_Schedule] WHERE ClassID = @pClassID";
+        //    SqlCommand cmd = new SqlCommand(query, conn);
+        //    cmd.Parameters.AddWithValue("@pClassID", uID);
+
+
+        //    //Step 3 - query the DB
+        //    cmd.ExecuteNonQuery();
+
+        //    //Step 4 - close the connection
+        //    conn.Close();
+
+
+        //}
+
+        internal void UpdateCourses(string class1, int uID)
         {
 
             //Step 1 - Connecto to the DB
@@ -124,32 +172,10 @@ namespace WebApplicationDemo.DAL
             conn.Open();
 
             //Step 2 - create a command
-            string query = "DELETE FROM [dbo].[Student_Schedule] WHERE ClassID = @pClassID";
+            string query = "INSERT INTO [dbo].[Student_Schedule]([ClassID],[StudentID])VALUES(@pClassID,@pStudentID) select SCOPE_IDENTITY() as StudentID;";
             SqlCommand cmd = new SqlCommand(query, conn);
-            cmd.Parameters.AddWithValue("@pClassID", uID);
-
-
-            //Step 3 - query the DB
-            cmd.ExecuteNonQuery();
-
-            //Step 4 - close the connection
-            conn.Close();
-
-
-        }
-
-        internal void UpdateCourses(Courses courses)
-        {
-            //Step 1 - Connecto to the DB
-            string connStr = configuration.GetConnectionString("DefaultConnection");
-            SqlConnection conn = new SqlConnection(connStr);
-            conn.Open();
-
-            //Step 2 - create a command
-            string query = "UPDATE [dbo].[Student_Schedule] SET [ClassID] =pClassID, WHERE StudentID = @pStudentID";
-            SqlCommand cmd = new SqlCommand(query, conn);
-            cmd.Parameters.AddWithValue("@pStudentID", courses.StudentID);
-            cmd.Parameters.AddWithValue("@pClassID", courses.ClassID);
+            cmd.Parameters.AddWithValue("@pStudentID", uID);
+            cmd.Parameters.AddWithValue("@pClassID", class1);
             
             
 
@@ -159,5 +185,8 @@ namespace WebApplicationDemo.DAL
             //Step 4 - close the connection
             conn.Close();
         }
+
+       
+
     }
 }

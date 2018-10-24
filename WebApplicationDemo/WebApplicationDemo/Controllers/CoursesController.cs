@@ -29,7 +29,7 @@ namespace WebApplicationDemo.Controllers
             //send it to the DB
             //validate the info
 
-            //string connStr = configuration.GetConnectionString("DefaultConnection");
+           
             DALCourses dp = new DALCourses(configuration);
             int uID = dp.addCourses(courses);
 
@@ -43,15 +43,21 @@ namespace WebApplicationDemo.Controllers
             return View(courses);
         }
 
-        public IActionResult EditCourse()
+        public IActionResult EditCourse(int? id)
         {
             //get the UID from the Session
             int uID = Convert.ToInt32(HttpContext.Session.GetString("uID")); //reads from the session
 
             //get the Course object from the DB using the DALCourse class
             DALCourses dp = new DALCourses(configuration);
+            DALStudent ds = new DALStudent(configuration);
+            Student stu = ds.getStudent(uID);
             viewModelStudentCourse courseList = new viewModelStudentCourse();
-
+            courseList.UID = stu.UID;
+            
+            courseList.FirstName = stu.FirstName;
+            courseList.LastName = stu.LastName;
+            courseList.StudentEmail = stu.StudentEmail;
             courseList.Courses = new Courselist();
             courseList.Courses.Courses = dp.GetCourseAvailableForStudent(uID);
 
@@ -60,30 +66,38 @@ namespace WebApplicationDemo.Controllers
         }
 
 
-        public IActionResult UpdateCourse(Courses courses)
+        public IActionResult UpdateCourse(string class1,string class2, string class3)
         {
             //get the uid from the session
             int uID = Convert.ToInt32(HttpContext.Session.GetString("uID")); //reads from the session
-            courses.UID = uID;
+     
+
 
             DALCourses dp = new DALCourses(configuration);
-            dp.UpdateCourses(courses);
-            return View("Registration", courses);
+            dp.UpdateCourses(class1,uID);
+            dp.UpdateCourses(class2, uID);
+            dp.UpdateCourses(class3, uID);
+            viewModelStudentCourse vwcourse = new viewModelStudentCourse();
+            vwcourse.Courses = new Courselist();
+            vwcourse.Courses.Courses = new List<Courses>();
+            vwcourse.Courses.Courses.Add(dp.getCourses(class1));
+            vwcourse.Courses.Courses.Add(dp.getCourses(class2));
+            vwcourse.Courses.Courses.Add(dp.getCourses(class3));
+
+            DALStudent ds = new DALStudent(configuration);
+            Student stu = ds.getStudent(uID);
+            vwcourse.UID = uID;
+            vwcourse.FirstName = stu.FirstName;
+            vwcourse.LastName = stu.LastName;
+            vwcourse.StudentEmail = stu.StudentEmail;
+            //vwcourse.ClassTime = stu.ClassTime;
+           return View("UpdateCourse", vwcourse);
+
         }
 
-        public IActionResult DeleteStudent()
-        {
-            //get the uid from the session
-            int uID = Convert.ToInt32(HttpContext.Session.GetString("uID")); //reads from the session
-            DALCourses dp = new DALCourses(configuration);
-            Courses courses= dp.getCourses(uID);
-
-            dp.DeleteCourses(uID);
-
-                       
-            return View(courses);
 
 
-        }
+
+
     }
 }

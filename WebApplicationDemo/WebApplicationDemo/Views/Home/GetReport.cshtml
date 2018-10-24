@@ -1,0 +1,59 @@
+﻿@model WebApplicationDemo.Models.viewModelStudentCourse
+
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>GetReport</title>
+</head>
+<body>
+    <p>
+        <a asp-action="Create">Report</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StudentEmail)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ClassID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ClassName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ClassTime)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Model.Courses.Courses)
+            {
+                <tr>
+                    <td>@student.ClassID</td>
+                    <td>@student.ClassName</td>
+                    <td>@student.ClassTime.ToShortTimeString()</td>
+                </tr>
+            }
+            }
+        </tbody>
+    </table>
+</body>
+</html>

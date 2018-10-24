@@ -1,22 +1,21 @@
 ﻿@model WebApplicationDemo.Models.viewModelStudentCourse
 
 
+
 @{
     Layout = null;
 }
-
 
 <!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Registration</title>
-
+    <title>UpdateCourse</title>
 </head>
 <body>
     <center>
-        <h1>Registration Page</h1>
+        <h1>Courses Selected</h1>
         <br />
         <P>
             Student ID:
@@ -30,31 +29,28 @@
             Email Address:
             @Model.StudentEmail
         </P>
-        <p>Courses Available to Pick</p>
         <table>
             <tr>
-                <th>Class ID</th>
+                @*<th>Class ID</th>*@
                 <th>Class Name</th>
                 <th>Class Time</th>
             </tr>
+
             @foreach (var student in Model.Courses.Courses)
             {
-            <tr>
-                <td>@student.ClassID</td>
-                <td>@student.ClassName</td>
-                <td>@student.ClassTime.ToShortTimeString()</td>
-            </tr>
+                <tr>
+                    @*<td>@student.ClassID</td>*@
+                    <td>@student.ClassName</td>
+                    <td>@student.ClassTime.ToShortTimeString()</td>
+                </tr>
             }
         </table>
         <br />
         <br />
-
-        <a href="@Url.Action("EditCourse","Courses")">Pick Your Courses </a>
-        &nbsp;
-        @*<a href="@Url.Action("EditStudent","Home")">Edit Info </a>*@
-        &nbsp;
-        <a href="@Url.Action("DeleteStudent","Home")">Delete Student </a>
-
+        <a href="@Url.Action("GetReport","Home")">Report </a>
     </center>
+
+
+
 </body>
 </html>

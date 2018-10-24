@@ -12,7 +12,10 @@ namespace WebApplicationDemo.Models
         public string ClassName { get; set; }
         public DateTime ClassTime { get; set; }
         public int UID { get; set; }
-        public object StudentID { get;  set; }
+        public object StudentID { get; set; }
+        public string FirstName { get;  set; }
+        public string LastName { get;  set; }
+        public string StudentEmail { get;  set; }
     }
 
     public class Courselist
